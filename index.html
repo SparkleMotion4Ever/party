@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party App</title>
+    <style>
+        /* Page and button styling as before */
+        body {
+            background-color: #ff9800;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .party-button {
+            background-color: #ff69b4;
+            color: #fff;
+            font-size: 2em;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .party-button:hover {
+            background-color: #ff85c0;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <button class="party-button" onclick="getLocation()">Party</button>
+
+    <script>
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(fetchBestBar, showError);
+          } else {
+            alert("Geolocation is not supported by this browser.");
+          }
+        }
+      
+        function fetchBestBar(position) {
+          const userLat = position.coords.latitude;
+          const userLon = position.coords.longitude;
+      
+          fetch('http://localhost:3000/api/best-bar', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              latitude: userLat,
+              longitude: userLon,
+            }),
+          })
+          .then(response => response.json())
+          .then(bestBar => {
+            alert(`The best bar is: ${bestBar.name} (Rating: ${bestBar.rating})`);
+      
+            // Redirect to map page for best bar
+            window.location.href = `map.html?lat=${bestBar.coordinates.latitude}&lon=${bestBar.coordinates.longitude}&userLat=${userLat}&userLon=${userLon}`;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Could not retrieve the best bar. Please try again later.');
+          });
+        }
+      
+        function showError(error) {
+          alert("Could not retrieve location. Please enable location permissions.");
+        }
+      </script>
+</body>
+</html>
