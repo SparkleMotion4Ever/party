@@ -2,23 +2,26 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const app = express();
-const port = 3000;
+
+// Use the environment variable for the port
+const PORT = process.env.PORT || 3000;
 
 // Replace 'YOUR_YELP_API_KEY' with your actual Yelp API Key
 const YELP_API_KEY = '9rfAEkq6_bP8GsfAdT-pG78px_fg1cPmnSyRv9qwwW3zwUSoi7b2xj7xvXOyG7UkjBO9m3DkOtiy3R555MraelZv5p_sEfmBrfzFysLw2WuEG4G36oTJ8zC2Y74pZ3Yx';
 
-app.use(cors());
+// Middleware setup
+app.use(cors({ origin: 'https://sparklemotion4ever.github.io' }));
 app.use(express.json());
 
+// API endpoint to fetch the best bar
 app.post('/api/best-bar', async (req, res) => {
   const { latitude, longitude } = req.body;
 
   try {
     const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
       headers: {
-            Authorization: 'Bearer 9rfAEkq6_bP8GsfAdT-pG78px_fg1cPmnSyRv9qwwW3zwUSoi7b2xj7xvXOyG7UkjBO9m3DkOtiy3R555MraelZv5p_sEfmBrfzFysLw2WuEG4G36oTJ8zC2Y74pZ3Yx',
-          },
-          
+        Authorization: `Bearer ${YELP_API_KEY}`,
+      },
       params: {
         term: 'bars',
         latitude: latitude,
@@ -36,13 +39,7 @@ app.post('/api/best-bar', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-const cors = require('cors');
-app.use(cors({ origin: 'https://sparklemotion4ever.github.io' }));
-
-const PORT = process.env.PORT || 3000;
+// Start the server on the correct port
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
