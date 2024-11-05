@@ -1,0 +1,11 @@
+# Ignore system and user-specific files
+AppData/
+NTUSER.DAT
+NTUSER.*
+.vscode/
+.DS_Store
+*.log
+*.tmp
+
+# Ignore node_modules if using Node.js
+node_modules/
