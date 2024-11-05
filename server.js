@@ -3,8 +3,12 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
-// Use the environment variable for the port
+// Use the environment variable for the pconst PORT = process.env.PORT || 3000;
 const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
 
 // Replace 'YOUR_YELP_API_KEY' with your actual Yelp API Key
 const YELP_API_KEY = '9rfAEkq6_bP8GsfAdT-pG78px_fg1cPmnSyRv9qwwW3zwUSoi7b2xj7xvXOyG7UkjBO9m3DkOtiy3R555MraelZv5p_sEfmBrfzFysLw2WuEG4G36oTJ8zC2Y74pZ3Yx';
