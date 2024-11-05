@@ -39,3 +39,5 @@ app.post('/api/best-bar', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+const cors = require('cors');
+app.use(cors({ origin: 'https://sparklemotion4ever.github.io' }));
