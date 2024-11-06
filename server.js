@@ -17,7 +17,12 @@ app.get('/', (req, res) => {
 
 // API endpoint to fetch the best bar
 app.post('/api/best-bar', async (req, res) => {
+  console.log('Received request at /api/best-bar');
   const { latitude, longitude } = req.body;
+
+  // Remaining code for fetching data from Yelp API...
+});
+
 
   try {
     const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
