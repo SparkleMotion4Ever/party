@@ -29,9 +29,8 @@ app.post('/api/best-bar', async (req, res) => {
         const bestBar = response.data.businesses[0];
         res.json(bestBar);
     } catch (error) {
-      console.error('Error fetching data from Yelp API:', error.response ? error.response.data : error.message);
-      res.status(500).json({ error: error.response ? error.response.data : error.message });
-      
+      console.error('Error fetching data from Yelp API:', error);
+      res.status(500).send('Error fetching data from Yelp API');
     }
 });
 
