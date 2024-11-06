@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 
-const app = express(); // Initialize 'app' immediately
+const app = express();
 
 // Enable CORS with specific options
 app.use(cors({ origin: '*' }));
@@ -13,6 +13,11 @@ app.use(express.json());
 
 // Use environment variable for the port, provided by Heroku
 const PORT = process.env.PORT || 3000;
+
+// Root route to handle GET requests at the root URL
+app.get('/', (req, res) => {
+  res.send('Welcome to the Yelp Best Bar API!');
+});
 
 // API endpoint to fetch the best bar
 app.post('/api/best-bar', async (req, res) => {
