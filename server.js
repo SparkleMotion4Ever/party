@@ -6,6 +6,8 @@ const app = express();
 
 // Enable CORS for all origins
 app.use(cors());
+app.options('*', cors()); // Allow preflight requests for all routes
+
 app.use(express.json());
 
 // Use environment variable for the port, provided by Heroku
@@ -18,7 +20,7 @@ app.post('/api/best-bar', async (req, res) => {
   try {
     const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
       headers: {
-        Authorization: `Bearer 9rfAEkq6_bP8GsfAdT-pG78px_fg1cPmnSyRv9qwwW3zwUSoi7b2xj7xvXOyG7UkjBO9m3DkOtiy3R555MraelZv5p_sEfmBrfzFysLw2WuEG4G36oTJ8zC2Y74pZ3Yx`, // Replace with your Yelp API key
+        Authorization: `Bearer ${process.env.YELP_API_KEY}`, // Uses environment variable for API key
       },
       params: {
         term: 'bars',
