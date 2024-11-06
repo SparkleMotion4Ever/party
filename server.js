@@ -21,7 +21,6 @@ app.post('/api/best-bar', async (req, res) => {
   const { latitude, longitude } = req.body;
 
   // Remaining code for fetching data from Yelp API...
-});
 
 
   try {
@@ -38,16 +37,7 @@ app.post('/api/best-bar', async (req, res) => {
       },
     });
 
-    const bestBar = response.data.businesses[0];
-    res.json(bestBar);
-  } catch (error) {
-    console.error('Error fetching data from Yelp API:', error);
-    res.status(500).send('Error fetching data from Yelp API');
-  }
-});
-
-// Start the server
-const PORT = process.env.PORT || 3000;
+    const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
