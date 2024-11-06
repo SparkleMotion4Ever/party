@@ -22,7 +22,7 @@ app.post('/api/best-bar', async (req, res) => {
   try {
     const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
       headers: {
-        Authorization: `Bearer YOUR_YELP_API_KEY`, // Replace with your Yelp API key
+        Authorization: `Bearer 9rfAEkq6_bP8GsfAdT-pG78px_fg1cPmnSyRv9qwwW3zwUSoi7b2xj7xvXOyG7UkjBO9m3DkOtiy3R555MraelZv5p_sEfmBrfzFysLw2WuEG4G36oTJ8zC2Y74pZ3Yx`, // Replace with your Yelp API key
       },
       params: {
         term: 'bars',
