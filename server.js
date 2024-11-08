@@ -46,17 +46,18 @@ app.post('/api/best-bar', async (req, res) => {
       }
     });
 
-    if (response.data.businesses.length === 0) {
-      return res.status(404).json({ error: 'No bars found' });
+    if (response.data && response.data.businesses && response.data.businesses.length > 0) {
+      const bestBar = response.data.businesses[0];
+      res.json(bestBar);
+    } else {
+      res.status(404).json({ error: 'No bars found' });
     }
-
-    const bestBar = response.data.businesses[0];
-    res.json(bestBar);
   } catch (error) {
-    console.error('Error fetching data from Yelp API:', error.response ? error.response.data : error.message);
-    res.status(500).send('Error fetching data from Yelp API');
+    console.error('Error fetching data from Yelp API:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 // Start the server
 app.listen(PORT, () => {
