@@ -6,14 +6,16 @@ require('dotenv').config();
 const app = express();
 
 // Enable CORS with specific options
-app.use(cors({
-  origin: '*', // You can set this to your frontend domain for better security
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-
-app.options('*', cors()); // Allow preflight requests for all routes
-
+app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // Allow all origins
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
 // Middleware to parse JSON bodies
 app.use(express.json());
 
@@ -32,17 +34,18 @@ app.post('/api/best-bar', async (req, res) => {
   console.log("Latitude:", latitude, "Longitude:", longitude); // Log parameters to confirm values
 
   try {
+    const yelpApiKey = process.env.YELP_API_KEY;
     const response = await axios.get('https://api.yelp.com/v3/businesses/search', {
       headers: {
-        Authorization: `Bearer 9rfAEkq6_bP8GsfAdT-pG78px_fg1cPmnSyRv9qwwW3zwUSoi7b2xj7xvXOyG7UkjBO9m3DkOtiy3R555MraelZv5p_sEfmBrfzFysLw2WuEG4G36oTJ8zC2Y74pZ3Yx`, // Replace with your actual API key
+        Authorization: `Bearer ${yelpApiKey}`
       },
       params: {
         term: 'bars',
-        latitude: parseFloat(latitude),  // Ensure latitude is a number
-        longitude: parseFloat(longitude), // Ensure longitude is a number
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
         sort_by: 'rating',
-        limit: 1,
-      },
+        limit: 1
+      }
     });
 
     const bestBar = response.data.businesses[0];
