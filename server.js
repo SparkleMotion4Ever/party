@@ -19,7 +19,7 @@ app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.sendStatus(204);
 });
-
+app.use(express.json());
 // Use environment variable for the port, p
 
 // Root route to handle GET requests at the root URL
