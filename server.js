@@ -11,7 +11,7 @@ const yelpApiKey = process.env.YELP_API_KEY;
 app.use(cors());
 
 // Middleware to parse JSON bodies
-app.use(express.json());
+
 
 app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
