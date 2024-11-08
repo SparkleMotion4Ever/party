@@ -30,8 +30,7 @@ app.get('/', (req, res) => {
 // API endpoint to fetch the best bar
 app.post('/api/best-bar', async (req, res) => {
   const { latitude, longitude } = req.body;
-  console.log("Latitude:", latitude, "Longitude:", longitude); // Log parameters to confirm values
-
+  
   if (!latitude || !longitude) {
     return res.status(400).json({ error: 'Latitude and longitude are required' });
   }
