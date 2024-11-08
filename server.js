@@ -7,27 +7,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const yelpApiKey = process.env.YELP_API_KEY;
 
-// Enable CORS with specific options
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
-}));
+// Middleware to handle CORS
+app.use(cors());
+app.use(express.json()); // Middleware to parse JSON bodies
 
-// Middleware to parse JSON bodies
-
-
+// CORS Preflight Handling
 app.options('*', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.sendStatus(204);
 });
-app.use(express.json());
-// Use environment variable for the port, p
 
-// Root route to handle GET requests at the root URL
+// Root route
 app.get('/', (req, res) => {
   res.send('Welcome to the Yelp Best Bar API!');
 });
@@ -35,7 +27,7 @@ app.get('/', (req, res) => {
 // API endpoint to fetch the best bar
 app.post('/api/best-bar', async (req, res) => {
   const { latitude, longitude } = req.body;
-  
+
   if (!latitude || !longitude) {
     return res.status(400).json({ error: 'Latitude and longitude are required' });
   }
