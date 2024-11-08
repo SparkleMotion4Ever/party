@@ -8,7 +8,12 @@ const PORT = process.env.PORT || 3000;
 const yelpApiKey = process.env.YELP_API_KEY;
 
 // Enable CORS with specific options
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
+}));
 
 // Middleware to parse JSON bodies
 
