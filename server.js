@@ -1,11 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+require('dotenv').config();
 
 const app = express();
 
 // Enable CORS with specific options
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: '*', // You can set this to your frontend domain for better security
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.options('*', cors()); // Allow preflight requests for all routes
 
 // Middleware to parse JSON bodies
@@ -13,6 +19,7 @@ app.use(express.json());
 
 // Use environment variable for the port, provided by Heroku
 const PORT = process.env.PORT || 3000;
+const yelpApiKey = process.env.YELP_API_KEY;
 
 // Root route to handle GET requests at the root URL
 app.get('/', (req, res) => {
